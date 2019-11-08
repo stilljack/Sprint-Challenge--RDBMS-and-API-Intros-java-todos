@@ -53,41 +53,6 @@ public class UserController {
         return new ResponseEntity<>(myUser, HttpStatus.OK);
 
     }
-
-    //POST /users/user - adds a user.
-    @PostMapping(value = "/user",
-            consumes = {"application/json"})
-    public ResponseEntity<?> addNewRestaurant(@Valid
-                                              @RequestBody
-                                                      User newUser) {
-        newUser = userService.save(newUser);
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{userid}")
-                .buildAndExpand(newUser.getUserid())
-                .toUri();
-
-        responseHeaders.setLocation(newUserURI);
-
-        return new ResponseEntity<>(null,
-                responseHeaders,
-                HttpStatus.CREATED);
-    }
-
-    @PostMapping(value = "/todo/{userid}", consumes = {"application/json"})
-    public ResponseEntity<?> addTodoToUser(@Valid @RequestBody Todo newTodo, @PathVariable long userid) {
-        newTodo = todoService.save(newTodo, userid);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-    //POST /users/todo/{userid} - adds a todo to the user.
-    //{
-    //    "description": "Have Fun",
-    //    "datestarted": "2019-01-01T01:00"
-    //}
-
-
-
     //
     //{
     //    "username": "hops",
@@ -112,9 +77,37 @@ public class UserController {
     //        }
     //    ]
     //}
+    //POST /users/user - adds a user.
+    @PostMapping(value = "/user",
+            consumes = {"application/json"})
+    public ResponseEntity<?> addNewRestaurant(@Valid
+                                              @RequestBody
+                                                      User newUser) {
+        newUser = userService.save(newUser);
 
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{userid}")
+                .buildAndExpand(newUser.getUserid())
+                .toUri();
 
+        responseHeaders.setLocation(newUserURI);
 
+        return new ResponseEntity<>(null,
+                responseHeaders,
+                HttpStatus.CREATED);
+    }
+    //POST /users/todo/{userid} - adds a todo to the user.
+    //{
+    //    "description": "Have Fun",
+    //    "datestarted": "2019-01-01T01:00"
+    //}
+
+    @PostMapping(value = "/todo/{userid}", consumes = {"application/json"})
+    public ResponseEntity<?> addTodoToUser(@Valid @RequestBody Todo newTodo, @PathVariable long userid) {
+        newTodo = todoService.save(newTodo, userid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 
@@ -129,14 +122,27 @@ public class UserController {
     //{
     //    "completed": true
     //}
-    //DELETE /users/userid/{userid} - Deletes a user based off of their userid and deletes all their associated todos.
 
 
+    @PutMapping(value = "/todo/{todoid}", consumes = {"application/json"})
+    public ResponseEntity<?> updateTodo(@RequestBody Todo todo, @PathVariable long todoid) {
+        if (todo.getUser() !=null) {
+            todoService.update(todo, todoid);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
 
+    }
 
-
-
-
-
-
+    @DeleteMapping(value = "/userid/{userid}")
+    public ResponseEntity<?> deleteUser(@PathVariable long userid) {
+        userService.delete(userid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
+
+
+
+
+
+
+

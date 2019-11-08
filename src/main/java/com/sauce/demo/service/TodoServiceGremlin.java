@@ -32,8 +32,25 @@ public class TodoServiceGremlin  implements  TodoService{
         return todoRepository.save(newTodo);
     }
 
+    @Transactional
     @Override
     public Todo update(Todo todo, long todoid) {
-        return null;
+        Todo currentTodo = findTodoById(todoid);
+
+        if (todo.getDescription() != null) {
+            currentTodo.setDescription(todo.getDescription());
+        }
+
+        if (todo.getDatetime() != null) {
+            currentTodo.setDatetime(todo.getDatetime());
+        }
+
+        if (todo.isCompleted()) {
+            currentTodo.setCompleted(todo.isCompleted());
+        }
+        if (todo.getUser() != null) {
+            currentTodo.setUser(userService.findUserById(todo.getUser().getUserid()));
+        }
+        return todoRepository.save(currentTodo);
     }
 }

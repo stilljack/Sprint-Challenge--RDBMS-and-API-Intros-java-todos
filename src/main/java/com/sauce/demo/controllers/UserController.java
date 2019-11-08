@@ -109,23 +109,14 @@ public class UserController {
 
 
 
-    //PUT /todos/todo/{todoid} - updates a todo based on todoid. Note: null boolean is not a thing so adjust accordingly.
-    //
-    //Hint: to change the user of the todo through this endpoint, try using code like this:
-    //        if (todo.getUser() != null)
-    //        {
-    //            newTodo.setUser(userService.findUserById(todo.getUser().getUserid()));
-    //        }
-    //You can use the following as test data.
-    //{
-    //    "completed": true
-    //}
 
-
-    @PutMapping(value = "/todo/{todoid} ", consumes = {"application/json"})
+/*
+    @PutMapping(value = "/todo/update/{todoid} ", consumes = {"application/json"})
     public ResponseEntity<?> updateTodo(@RequestBody Todo todo, @PathVariable long todoid) {
         Todo myTodo = new Todo();
-
+            if(todoService.findTodoById(todoid)!=null){
+                myTodo=todoService.findTodoById(todoid);
+            }
         if (todo.getUser() != null)
         {
             myTodo.setUser(userService.findUserById(todo.getUser().getUserid()));
@@ -138,7 +129,7 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.OK);
 
-    }
+    }*/
 
     @DeleteMapping(value = "/userid/{userid}")
     public ResponseEntity<?> deleteUser(@PathVariable long userid) {

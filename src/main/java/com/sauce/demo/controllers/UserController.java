@@ -37,11 +37,9 @@ public class UserController {
     //GET /users/users - return all of the users and their todos
     @GetMapping(value = "/users",
             produces = {"application/json"})
-    public ResponseEntity<?> allUsers()
-    {
+    public ResponseEntity<?> allUsers() {
         List<User> myUsers = userService.findAll();
         return new ResponseEntity<>(myUsers, HttpStatus.OK);
-
     }
 
     //GET /users/user/{userid} - return the user and their todos based off of id
@@ -80,7 +78,7 @@ public class UserController {
     //POST /users/user - adds a user.
     @PostMapping(value = "/user",
             consumes = {"application/json"})
-    public ResponseEntity<?> addNewRestaurant(@Valid
+    public ResponseEntity<?> addNewUser(@Valid
                                               @RequestBody
                                                       User newUser) {
         newUser = userService.save(newUser);
@@ -124,11 +122,20 @@ public class UserController {
     //}
 
 
-    @PutMapping(value = "/todo/{todoid}", consumes = {"application/json"})
+    @PutMapping(value = "/todo/{todoid} ", consumes = {"application/json"})
     public ResponseEntity<?> updateTodo(@RequestBody Todo todo, @PathVariable long todoid) {
-        if (todo.getUser() !=null) {
-            todoService.update(todo, todoid);
+        Todo myTodo = new Todo();
+
+        if (todo.getUser() != null)
+        {
+            myTodo.setUser(userService.findUserById(todo.getUser().getUserid()));
         }
+        myTodo.setCompleted(todo.isCompleted());
+        myTodo.setDatetime(todo.getDatetime());
+        myTodo.setDescription(todo.getDescription());;
+
+            todoService.update(todo,todoid);
+
         return new ResponseEntity<>(HttpStatus.OK);
 
     }

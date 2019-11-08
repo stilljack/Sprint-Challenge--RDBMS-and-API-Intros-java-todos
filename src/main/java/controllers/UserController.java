@@ -2,11 +2,11 @@ package controllers;
 
 import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import service.RoleService;
 import service.TodoService;
 import service.UserService;
@@ -31,11 +31,21 @@ public class UserController {
     //
     //GET /users/users - return all of the users and their todos
     @GetMapping(value = "/users",
-    produces = {"application/json"})
-    public ResponseEntity<?> listAllUsers()
+            produces = {"application/json"})
+    public ResponseEntity<?> allUsers()
     {
-        List<User> myUsers = userService.allUsers();
+        List<User> myUsers = userService.findAll();
         return new ResponseEntity<>(myUsers, HttpStatus.OK);
+
+    }
+    //
+    //GET /users/user/{userid} - return the user and their todos based off of id
+    @GetMapping(value = "/user/{userid}",
+            produces = {"application/json"})
+    public ResponseEntity<?> findUserById(@PathVariable long userid)
+    {
+        User myUser = userService.findUserById(userid);
+        return new ResponseEntity<>(myUser, HttpStatus.OK);
 
     }
 
@@ -43,9 +53,6 @@ public class UserController {
 
 
 
-
-    //
-    //GET /users/user/{userid} - return the user and their todos based off of id
     //
     //POST /users/user - adds a user.
     //

@@ -2,9 +2,9 @@ package service;
 
 import models.User;
 
-public class UserService {
+import java.util.List;
 
-public void save (User user){
-
-}
+public interface UserService {
+ List<User> allUsers();
+ User save (User user);
 }

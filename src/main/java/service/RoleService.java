@@ -2,10 +2,7 @@ package service;
 
 import models.Role;
 
-public class RoleService {
+public interface RoleService {
 
-    public Role save (Role role ){
-        return role;
-
-    }
+  Role save (Role role );
 }

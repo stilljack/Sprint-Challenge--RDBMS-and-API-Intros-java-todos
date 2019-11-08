@@ -13,7 +13,8 @@ public class Todo {
         this.datetime = datetime;
         this.user = user;
     }
-
+    public Todo() {
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long todoid;

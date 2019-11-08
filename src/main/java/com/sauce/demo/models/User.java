@@ -15,6 +15,9 @@ public class User {
         this.password = password;
     }
 
+    public User (){}
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userid;
@@ -41,6 +44,9 @@ public class User {
     public void setTodos(List<Todo> todos) {
         this.todos = todos;
     }
+
+    public void addTodos(Todo todo){this.todos.add(todo);}
+
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,

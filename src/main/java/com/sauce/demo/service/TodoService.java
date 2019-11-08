@@ -1,5 +1,11 @@
 package com.sauce.demo.service;
 
-public interface TodoService {
+import com.sauce.demo.models.Todo;
 
+public interface TodoService {
+    Todo findTodoById(long id);
+
+    Todo save(Todo todo, long userid);
+
+    Todo update(Todo todo, long todoid);
 }

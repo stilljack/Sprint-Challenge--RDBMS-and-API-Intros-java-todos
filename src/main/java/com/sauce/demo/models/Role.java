@@ -13,6 +13,9 @@ public class Role {
         this.roleName = roleName;
     }
 
+    public Role() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long roleid;
@@ -22,7 +25,6 @@ public class Role {
 
 
     @ManyToMany(mappedBy = "roles")
-    @JsonIgnoreProperties("roles")
     private List<User> users = new ArrayList<>();
 
 
@@ -49,4 +51,5 @@ public class Role {
     public void setUsers(List<User> users) {
         this.users = users;
     }
+    public void addUser(User user){this.users.add(user);}
 }

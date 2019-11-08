@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User {
-    public User(String username, String primaryEmail, String password) {
+    public User(String username, String password ,String primaryEmail) {
         this.username = username;
         this.primaryEmail = primaryEmail;
         this.password = password;
@@ -94,7 +94,8 @@ public class User {
         this.roles = roles;
     }
 
-    public void addRoles (Role role) {
-        this.roles.add(role);
+    public void addRoles(Role role) {
+        roles.add(role);
+        role.getUsers().add(this);
     }
 }

@@ -43,15 +43,15 @@ public class SeedData implements CommandLineRunner
         u1.addRoles(r3);
         u1.getTodos()
                 .add(new Todo("Finish java-orders-swagger",
-                        new Date().getTime(),
+                        new Date(),
                         u1));
         u1.getTodos()
                 .add(new Todo("Feed the turtles",
-                        new Date().getTime(),
+                        new Date(),
                         u1));
         u1.getTodos()
                 .add(new Todo("Complete the sprint challenge",
-                        new Date().getTime(),
+                        new Date(),
                         u1));
 
         userService.save(u1);
@@ -63,11 +63,11 @@ public class SeedData implements CommandLineRunner
         u2.addRoles(r3);
         u2.getTodos()
                 .add(new Todo("Walk the dogs",
-                        new Date().getTime(),
+                        new Date(),
                         u2));
         u2.getTodos()
                 .add(new Todo("provide feedback to my instructor",
-                        new Date().getTime(),
+                        new Date(),
                         u2));
         userService.save(u2);
 
@@ -88,6 +88,7 @@ public class SeedData implements CommandLineRunner
         User u5 = new User("misskitty",
                 "password",
                 "misskitty@school.lambda");
+        u4.addRoles(r1);
         userService.save(u5);
     }
 }

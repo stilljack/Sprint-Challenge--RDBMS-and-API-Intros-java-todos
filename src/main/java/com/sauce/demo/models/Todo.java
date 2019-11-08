@@ -8,14 +8,14 @@ import java.util.Date;
 @Entity
 @Table(name="todos")
 public class Todo {
-    public Todo(String description, Long datetime, boolean completed, User user) {
+    public Todo(String description, Date datetime, boolean completed, User user) {
         this.description = description;
         this.datetime = datetime;
         this.completed = completed;
         this.user = user;
     }
 
-    public Todo(String description, Long datetime, User user) {
+    public Todo(String description, Date datetime, User user) {
         this.description = description;
         this.datetime = datetime;
         this.completed = false;
@@ -28,7 +28,7 @@ public class Todo {
     private long todoid;
     @Column(nullable = false)
     private String description;
-    private Long datetime;
+    private Date datetime;
     private boolean completed;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid",
@@ -54,11 +54,11 @@ public class Todo {
         this.description = description;
     }
 
-    public long getDatetime() {
+    public Date getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(long datetime) {
+    public void setDatetime(Date datetime) {
         this.datetime = datetime;
     }
 

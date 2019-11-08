@@ -24,7 +24,7 @@ public class RoleServiceGremlin implements  RoleService{
 
         Role newRole = new Role();
         newRole.setUsers(new ArrayList<>());
-        newRole.setRoleName(newRole.getRoleName());
+        newRole.setRolename(role.getRolename());
 
         return roleRepository.save(newRole);
     }

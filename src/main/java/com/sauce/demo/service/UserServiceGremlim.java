@@ -49,27 +49,30 @@ public class UserServiceGremlim implements UserService {
     @Override
     public User save(User user) {
 
-        User newUser =new User();
+        User newUser = new User();
 
         newUser.setPassword(user.getPassword());
         newUser.setPrimaryEmail(user.getPrimaryEmail());
         newUser.setUsername(user.getUsername());
-        for (Todo t : user.getTodos())
-        {
-            Todo newTodo =  new Todo(t.getDescription(),t.getDatetime(),t.isCompleted(),t.getUser());
 
+        for (Todo t : user.getTodos()) {
+            Todo newTodo = new Todo(t.getDescription(), t.getDatetime(), t.isCompleted(), newUser);
             newUser.getTodos().add(newTodo);
         }
 
-
         for (Role r : user.getRoles()) {
             Role newRole = roleService.findRoleById(r.getRoleid());
+
             newUser.addRoles(newRole);
         }
 
-
-
-
+        return userRepository.save(newUser);
+    }
+    @Override
+    public User findUserById(long id) {
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User with ID: " + id + " does not exist"));
+    }
+}
 //        if(user.getRoles().get(0) != null) {
 //            for (Role r : user.getRoles()) {
 //                Role newRole = new Role(r.getRoleName());
@@ -81,14 +84,3 @@ public class UserServiceGremlim implements UserService {
 //            }
 //        }
 
-        return userRepository.save(newUser);
-    }
-
-    @Override
-    public User findUserById(long id) {
-        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User with ID: " + id + " does not exist"));
-    }
-
-
-
-}

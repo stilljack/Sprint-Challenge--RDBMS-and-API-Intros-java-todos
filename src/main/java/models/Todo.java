@@ -3,15 +3,17 @@ package models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="todos")
 public class Todo {
 
-    public Todo(String description, long datetime, boolean completed) {
+    public Todo(String description, long datetime, User user) {
         this.description = description;
         this.datetime = datetime;
-        this.completed = completed;
+        this.user = user;
     }
 
     @Id
@@ -19,13 +21,15 @@ public class Todo {
     private long todoid;
     @Column(nullable = false)
     private String description;
-    private long datetime;
+    private Long datetime;
     private boolean completed;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid",
             nullable = false)
     @JsonIgnoreProperties({"roles", "hibernateLazyInitializer"})
     private User user; //foriegn key one to many from user
+
+
 
     public long getTodoid() {
         return todoid;

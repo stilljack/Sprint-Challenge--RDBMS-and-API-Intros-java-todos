@@ -3,6 +3,8 @@ package models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="roles")
@@ -18,6 +20,12 @@ public class Role {
     @Column(nullable = false,unique = true)
     private String roleName;
 
+
+    @ManyToMany(mappedBy = "roles")
+    @JsonIgnoreProperties("roles")
+    private List<User> users = new ArrayList<>();
+
+
     public long getRoleid() {
         return roleid;
     }
@@ -32,5 +40,13 @@ public class Role {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

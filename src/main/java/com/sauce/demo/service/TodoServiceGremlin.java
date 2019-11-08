@@ -23,7 +23,13 @@ public class TodoServiceGremlin  implements  TodoService{
 
     @Override
     public Todo save(Todo todo, long userid) {
-        return null;
+        Todo newTodo = new Todo();
+
+        newTodo.setDescription(todo.getDescription());
+        newTodo.setDatetime(todo.getDatetime());
+        newTodo.setUser(userService.findUserById(userid));
+
+        return todoRepository.save(newTodo);
     }
 
     @Override

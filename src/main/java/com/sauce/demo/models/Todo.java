@@ -3,14 +3,22 @@ package com.sauce.demo.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="todos")
 public class Todo {
-
-    public Todo(String description, long datetime, User user) {
+    public Todo(String description, Long datetime, boolean completed, User user) {
         this.description = description;
         this.datetime = datetime;
+        this.completed = completed;
+        this.user = user;
+    }
+
+    public Todo(String description, Long datetime, User user) {
+        this.description = description;
+        this.datetime = datetime;
+        this.completed = false;
         this.user = user;
     }
     public Todo() {

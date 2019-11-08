@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,9 @@ public class UserServiceGremlim implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private RoleRepository roleepository;
+    private RoleRepository roleRpository;
+    @Autowired
+    private RoleService roleService;
 
     @Override
     public List<User> findAll() {
@@ -30,18 +33,16 @@ public class UserServiceGremlim implements UserService {
     }
 
     @Override
-    public User findUserById(long id) {
-        return null;
-    }
-
-    @Override
     public User update(User user, long id) {
         return null;
     }
 
+    @Transactional
     @Override
     public void delete(long id) {
-
+        if (findUserById(id) != null) {
+            userRepository.deleteById(id);
+        }
     }
 
     @Transactional
@@ -53,18 +54,16 @@ public class UserServiceGremlim implements UserService {
         newUser.setPassword(user.getPassword());
         newUser.setPrimaryEmail(user.getPrimaryEmail());
         newUser.setUsername(user.getUsername());
-
         for (Todo t : user.getTodos())
         {
-            Todo newTodo =  new Todo(t.getDescription(),t.getDatetime(),t.getUser());
+            Todo newTodo =  new Todo(t.getDescription(),t.getDatetime(),t.isCompleted(),t.getUser());
 
-            newUser.addTodos(newTodo);
+            newUser.getTodos().add(newTodo);
         }
 
 
         for (Role r : user.getRoles()) {
-            Role newRole = new Role(r.getRoleName());
-            roleepository.save(r);
+            Role newRole = roleService.findRoleById(r.getRoleid());
             newUser.addRoles(newRole);
         }
 
@@ -84,6 +83,12 @@ public class UserServiceGremlim implements UserService {
 
         return userRepository.save(newUser);
     }
+
+    @Override
+    public User findUserById(long id) {
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User with ID: " + id + " does not exist"));
+    }
+
 
 
 }

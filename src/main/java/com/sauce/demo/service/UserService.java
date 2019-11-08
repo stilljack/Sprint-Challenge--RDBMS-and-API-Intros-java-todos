@@ -1,6 +1,8 @@
-package service;
+package com.sauce.demo.service;
 
-import models.User;
+
+
+import com.sauce.demo.models.User;
 
 import java.util.List;
 

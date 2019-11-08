@@ -1,9 +1,10 @@
-package service;
+package com.sauce.demo.service;
 
-import models.User;
+import com.sauce.demo.models.User;
+import com.sauce.demo.respositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import respositories.UserRepository;
+
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;

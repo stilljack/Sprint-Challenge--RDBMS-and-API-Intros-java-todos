@@ -1,4 +1,4 @@
-package models;
+package com.sauce.demo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

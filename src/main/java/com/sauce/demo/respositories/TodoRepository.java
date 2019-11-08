@@ -1,7 +1,8 @@
-package respositories;
+package com.sauce.demo.respositories;
 
-import models.Todo;
-import models.User;
+
+
+import com.sauce.demo.models.Todo;
 import org.springframework.data.repository.CrudRepository;
 
 public interface TodoRepository extends CrudRepository<Todo,Long> {

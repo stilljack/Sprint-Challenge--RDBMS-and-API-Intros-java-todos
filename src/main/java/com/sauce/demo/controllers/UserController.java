@@ -1,17 +1,17 @@
-package controllers;
+package com.sauce.demo.controllers;
 
-import models.User;
+
+import com.sauce.demo.models.User;
+import com.sauce.demo.service.RoleService;
+import com.sauce.demo.service.TodoService;
+import com.sauce.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import service.RoleService;
-import service.TodoService;
-import service.UserService;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/users")

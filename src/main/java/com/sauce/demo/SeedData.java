@@ -1,11 +1,14 @@
-import models.Role;
-import models.Todo;
-import models.User;
+package com.sauce.demo;
+
+import com.sauce.demo.models.Role;
+import com.sauce.demo.models.Todo;
+import com.sauce.demo.models.User;
+import com.sauce.demo.service.RoleService;
+import com.sauce.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import service.RoleService;
-import service.UserService;
+
 
 import javax.transaction.Transactional;
 import java.util.Date;

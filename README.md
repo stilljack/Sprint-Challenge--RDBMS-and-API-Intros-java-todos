@@ -18,8 +18,8 @@ This is a basic todo database scheme with users and a todo list.
 
 ## Instructions
 
-Create a REST api service to store and read data from H2 database. 
-* SeedData.java is a sample script that can be modified to populate the database 
+Create a REST api com.sauce.demo.service to store and read data from H2 database. 
+* com.sauce.demo.SeedData.java is a sample script that can be modified to populate the database 
 * note that all new todos default to completed = false;
 
 The table layouts are as follows:

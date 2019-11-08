@@ -1,15 +1,20 @@
 package com.sauce.demo.controllers;
 
 
+import com.sauce.demo.models.Todo;
 import com.sauce.demo.models.User;
 import com.sauce.demo.service.RoleService;
 import com.sauce.demo.service.TodoService;
 import com.sauce.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 
@@ -38,7 +43,7 @@ public class UserController {
         return new ResponseEntity<>(myUsers, HttpStatus.OK);
 
     }
-    //
+
     //GET /users/user/{userid} - return the user and their todos based off of id
     @GetMapping(value = "/user/{userid}",
             produces = {"application/json"})
@@ -49,12 +54,40 @@ public class UserController {
 
     }
 
-
-
-
-
-    //
     //POST /users/user - adds a user.
+    @PostMapping(value = "/user",
+            consumes = {"application/json"})
+    public ResponseEntity<?> addNewRestaurant(@Valid
+                                              @RequestBody
+                                                      User newUser) {
+        newUser = userService.save(newUser);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{userid}")
+                .buildAndExpand(newUser.getUserid())
+                .toUri();
+
+        responseHeaders.setLocation(newUserURI);
+
+        return new ResponseEntity<>(null,
+                responseHeaders,
+                HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/todo/{userid}", consumes = {"application/json"})
+    public ResponseEntity<?> addTodoToUser(@Valid @RequestBody Todo newTodo, @PathVariable long userid) {
+        newTodo = todoService.save(newTodo, userid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    //POST /users/todo/{userid} - adds a todo to the user.
+    //{
+    //    "description": "Have Fun",
+    //    "datestarted": "2019-01-01T01:00"
+    //}
+
+
+
     //
     //{
     //    "username": "hops",
@@ -84,11 +117,7 @@ public class UserController {
 
 
 
-    //POST /users/todo/{userid} - adds a todo to the user.
-    //{
-    //    "description": "Have Fun",
-    //    "datestarted": "2019-01-01T01:00"
-    //}
+
     //PUT /todos/todo/{todoid} - updates a todo based on todoid. Note: null boolean is not a thing so adjust accordingly.
     //
     //Hint: to change the user of the todo through this endpoint, try using code like this:
